@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义指令</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div style="width: 100px;height: 100px;background: pink;position: absolute;" v-ab></div>
+	</div>
+</body>
+<script src="../vue.js"></script>
+<script>
+	Vue.directive('ab',function(a,b){
+		// console.log(a,b)
+		a.onmousedown=function(event){
+			var in_x=event.clientX
+			var in_y=event.clientY
+			var o_y=a.offsetTop
+			var o_x=a.offsetLeft
+			var n_x=in_x - o_x
+			var n_y=in_y - o_y
+			
+			document.onmousemove=function(event){
+				var m_x=event.clientX - n_x
+				var m_y=event.clientY - n_y
+				a.style.left=m_x + 'px'
+				a.style.top=m_y + 'px'
+			}
+			window.onmouseup=function(){
+				document.onmousemove=''
+			}
+		}
+	})
+	new Vue({
+		el:'#box'
+	})
+</script>
+</html>
