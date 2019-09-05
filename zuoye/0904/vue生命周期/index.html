@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>生命周期动态组件</title>
+</head>
+<body>
+	<div id="box">
+		<div>
+			<span v-for="i in arr" @click="type=i">{{i}}</span>
+		</div>
+		<keep-alive>
+			<component :is="type"></component>			
+		</keep-alive>
+	</div>
+</body>
+<script src="../vue.js"></script>
+<script>
+	Vue.component('no1',{
+		template:'<p>no1</p>',
+		mounted(){
+			console.log('渲染后')
+		},
+		created(){
+			console.log('创建后')
+		},
+		activated(){
+			console.log('激活')
+		},
+		deactivated(){
+			console.log('停用')
+		}
+	})
+	Vue.component('no2',{
+		template:'<p>no2</p>'
+	})
+	Vue.component('no3',{
+		template:'<p>no3</p>'
+	})
+	new Vue({
+		el:"#box",
+		data:{
+			type:'no1',
+			arr:['no1','no2','no3']
+		}
+	})
+</script>
+</html>

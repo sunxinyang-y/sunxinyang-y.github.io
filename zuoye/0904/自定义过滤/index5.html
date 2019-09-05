@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<div v-for='i in arr'>
+			{{i|a('+','/')}}
+		</div>
+		<div v-for='i in arr'>
+			{{i|bb('+')}}
+		</div>
+	</div>
+</body>
+<script src="../vue.js"></script>
+<script>
+	Vue.filter('bb',function(a,b){
+		var str=a+b
+		console.log(a,b)
+		return str
+	})
+
+
+
+
+	new Vue({
+		el:'#box',
+		data:{
+			arr:[1,2,3]
+		},
+		filters:{
+			a:function(a,b,c){
+				console.log(a,b,c)
+				var str=b+a+c
+				return str
+			}
+		}
+	})
+</script>
+</html>

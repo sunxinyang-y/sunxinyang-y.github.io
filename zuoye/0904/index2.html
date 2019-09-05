@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>菜单</title>
+	<style>
+		 *{
+		 	margin: 0;
+		 	padding: 0;
+		 }
+		 .sxy-enter,.sxy-leave-to,.sxy3-enter,.sxy3-leave-to{
+		 	opacity: 0;
+		 	top: 120px !important;
+		 }
+		 .sxy-enter-active,.sxy-leave-active,.sxy3-enter-active,.sxy3-leave-active,.sxy2-enter-active,.sxy2-leave-active{
+		 	transition: all .35s;
+		 }
+		 
+		  .sxy2-enter,.sxy2-leave-to{
+		 	opacity: 0;
+		 	left: -120px !important;
+		 }
+		 .h{
+		 	line-height: 60px;
+		 	text-align: center;
+		 	background: #000000;
+		 	color: #FFFFFF;
+		 }
+		 .h_2{
+		 	width: 800px;
+		 	background: #000;
+		 	position: absolute;
+		 	top: 60px;
+		 	left: 50%;
+		 	margin-left: -400px;
+		 	
+		 }
+		 .h_3{
+		 	text-align: center;
+		 	line-height: 30px;
+		 	color: #FFFFFF;
+		 	position: relative;
+		 }
+	</style>
+</head>
+<body>
+	<div id="box" >
+	     <one></one>
+	</div>
+	<template id="one">
+		<div style="position: relative;">
+			<div class="h" @click="s">
+				  首页
+			</div>
+			<transition :name="t_t1">
+			<div class="h_2" style="z-index: 2;" v-show="y_t">
+		      	<div v-for="i in arr" class="h_3">
+		      	 	{{i.title}}  
+		      	 	<span style="position: absolute;top: 0;right: 40px;" v-if="i.arr.length" @click="s2(i.arr)">></span>
+		      	</div>
+			</div>
+			</transition>
+			<transition name="sxy3">
+			<div class="h_2" v-show="s_t">
+				 <div class="h_3" @click="s3">
+			      	返回上一级  
+			      </div>
+			      <div v-for="i in z_arr" class="h_3">
+			      	 {{i}}  
+			      </div>
+			</div>
+			</transition>
+		</div>
+	</template>
+</body>
+<script src="vue.js"></script>
+	<script>
+		Vue.component('one', {
+			template: '#one',
+			methods:{
+				s(){
+					
+					if(this.s_t){
+						this.s_t = false
+					}else{
+						this.t_t1 = 'sxy'
+						this.y_t = !this.y_t 
+					}
+				},
+				s2(arr){
+					this.t_t1 = 'sxy2'
+					this.y_t = false
+					this.z_arr = arr
+					setTimeout(()=>{
+						this.s_t = true
+					},200)
+				},
+				s3(){
+					this.s_t = false
+					this.y_t = true
+				}
+			},
+			data(){
+				return {
+					arr:[
+						{title:'软件产品',arr:['sxy']},
+						{title:'sxy3',arr:[]},
+					],
+					y_t:false,
+					s_t:false,
+					t_t1:'sxy',
+					z_arr:'',
+				}
+			}
+		})
+		new Vue({
+			el: "#box",
+		})
+	</script>
+</html>

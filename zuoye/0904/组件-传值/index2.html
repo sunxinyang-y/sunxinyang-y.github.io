@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>组件和实例参数的区别</title>
+</head>
+<body>
+	<div id="box">
+		<button @click='btn'>你点击了{{num}}次</button>
+		<yy></yy>
+	</div>
+	<template id="yy">
+		<button @click='btn'>你点击了{{num}}次</button>
+	</template>
+</body>
+<script src="../vue.js"></script>
+<script src="../vue-resource.js"></script>
+<script>
+	Vue.component('yy',{
+		template:'#yy',
+		data(){
+			return{
+				num:0
+			}
+		},
+		methods:{
+			btn(){
+				this.num--
+			}
+		}
+	})
+
+
+	new Vue({
+		el:'#box',
+		data:{
+			num:0
+		},
+		methods:{
+			btn(){
+				this.num++
+			}
+		}
+	})
+</script>
+</html>

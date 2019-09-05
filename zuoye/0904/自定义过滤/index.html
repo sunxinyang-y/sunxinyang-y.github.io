@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>过滤</title>
+</head>
+<body>
+	<div id="box">
+		<div v-for='i in arr'>
+			{{i|a('<<','>>')}}
+		</div>
+
+		<div v-for='i in arr'>
+			{{i|b('<<')}}
+		</div>
+	</div>
+</body>
+<script src="../vue.js"></script>
+<script>
+	Vue.filter('b',function(a,b){
+				var str=b+a
+				return str
+	})
+	new Vue({
+		el:'#box',
+		data:{
+			value:'1',
+			arr:['你好','你']
+		},
+		filters:{
+			a:function(a,b,c){
+				console.log(a,b)
+				var str=b+a+c
+				return str
+			}
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<div v-for='i in arr'>
+			{{i|bb('孙鑫洋')}}
+		</div>
+		<div v-for='i in arr'>
+			{{i|yy('孙鑫洋','你好')}}
+		</div>
+	</div>
+</body>
+<script src="../vue.js"></script>
+<script>
+	Vue.filter('yy',function(a,b,c){
+		console.log(a,b,c)
+		var str=a+b+c
+		return str
+	})
+
+
+	new Vue({
+		el:'#box',
+		data:{
+			arr:['啊','你啊','再见啊']
+		},
+		filters:{
+			bb:function(a,b){
+				console.log(a,b)
+				// return a
+				var str=a+b
+				return str
+			}
+		}
+	})
+</script>
+</html>

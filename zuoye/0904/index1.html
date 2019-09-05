@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图</title>
+	<style>
+		*{
+			margin:0;
+			padding: 0;
+		}
+		.sxy-enter,.sxy2-leave-to{
+			left: -500px !important;
+			opacity: 0;
+		}
+		.sxy-enter-active,.sxy-leave-active,.sxy2-enter-active,.sxy2-leave-active{
+			transition: all 1s;
+		}
+		.sxy-leave-to,.sxy2-enter{
+			left: 500px !important;
+			opacity: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<sxy style="text-align: center;"></sxy>
+	</div>
+	<template id="sxy">
+		<div>
+			<div style="margin: 0 auto;">
+				<button @click="y1">下一个</button>
+				<button @click="y2">上一个</button>
+			</div>
+			
+			<div style="width: 500px;height:500px;margin: 0 auto;position: relative;">
+				<transition :name="s" v-for="(i,$index) in arr">
+					<div style="width: 500px;height:500px;position: absolute;left: 0;top: 0;" v-show="y==$index">
+						<img :src="i" width="500px"/>
+					</div>	
+				</transition>
+			</div>
+		</div>
+	</template>
+</body>
+<script src="vue.js"></script>
+<script>
+		Vue.component('sxy', {
+			template: '#sxy',
+			methods:{
+			   y1(){
+			   	this.s = 'sxy'
+
+			   	this.y++
+
+			   	if(this.y >= 5){
+			   		this.y = 0
+			   	}
+			   },
+			   y2(){
+			   	this.s = 'sxy2'
+
+			   	this.y--
+
+			   	if(this.y <= -1){
+			   		this.y = 4
+			   	}
+			   }
+			},
+			data() {
+				return {
+					y: 0,
+					s:'sxy',
+					arr:[
+						'../../images/bw-1.png',
+						'../../images/bw-2.png',
+						'../../images/bw-3.png',
+						'../../images/bw-4.png',
+						'../../images/bw-5.png',
+					]
+				}
+			}
+		})
+
+		new Vue({
+			el: "#box"
+		})
+	</script>
+</html>

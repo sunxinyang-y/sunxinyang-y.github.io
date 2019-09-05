@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<ul>
+			<a href='#/'><li>第一个</li></a>
+			<a href='#/two'><li>第二个</li></a>
+		</ul>
+		<div><router-view></router-view></div>
+	</div>
+	<template id='one'>
+		<div>
+			1
+		</div>
+		
+	</template>
+	<template id="two">
+		<div>
+			<div v-for='i in 2'>
+				<a :href="'#/two/three/'+i">{{i}}</a>
+			</div>
+			<router-view></router-view>
+		</div>
+	</template>
+	<template id="three">
+		<div>
+			{{$route.path}}
+		</div>
+	</template>
+</body>
+<script src="../vue.js"></script>
+<script src="../vue-resource.js"></script>
+<script src="../vue-router.js"></script>
+<script>
+	var one = {template:'#one'}
+	var two = {template:'#two'}
+	var routes = [
+		{
+			path:'/',
+			component:one
+		},
+		{
+			path:'/two',
+			component:two,
+			children:[
+				{
+					path:'three/:cc',
+					component:{template:'#three'}
+				}
+			]
+		}
+	]
+	var router=new VueRouter({
+		routes
+	})
+	new Vue({
+		el:'#box',
+		router
+	})
+</script>
+</html>

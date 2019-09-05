@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>兄弟之间传值</title>
+</head>
+<body>
+	<div id="box">
+		<sxy></sxy>
+		<sxy1></sxy1>
+	</div>
+	<template id="sxy">
+		<div @click='btn'>点击{{num}}</div>
+	</template>
+	<template id="sxy1">
+		<div @click='btn'>点击{{num}}</div>
+	</template>
+</body>
+<script src="js/vue-resource.js"></script>
+<script src="js/vue.js"></script>
+<script>
+	var bus=new Vue()
+	Vue.component('sxy',{
+		template:'#sxy',
+		data(){
+			return{
+				num:0
+			}
+		},
+		methods:{
+			btn(){
+				this.num++
+				bus.$emit('sxy',this.num)
+			}
+		},
+		mounted(){
+			bus.$on('sxy1',(a)=>{
+				this.num=a
+			})
+		}
+
+	})
+	Vue.component('sxy1',{
+		template:'#sxy1',
+		data(){
+			return {
+				num:0
+			}
+		},
+		methods:{
+			btn(){
+				this.num++
+				bus.$emit('sxy1',this.num)
+			}
+		},
+		mounted(){
+			bus.$on('sxy',(a)=>{
+				this.num=a
+			})
+		}
+	})
+	new Vue({
+			el: "#box",
+			data: {
+				num: 0,
+			}
+			
+		})
+</script>
+</html>

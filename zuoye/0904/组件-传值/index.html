@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>组件和实例参数的区别</title>
+</head>
+<body>
+	<div id="box">
+		<div v-for='i in arr'>
+			{{i}}
+		</div>
+		<sxy></sxy>
+	</div>
+	<template id="sxy">
+		<div>
+			<button @click="btn">点击了{{num}}次</button>
+		</div>
+	</template>
+</body>
+<script src="../vue.js"></script>
+<script src="../vue-resource.js"></script>
+<script>
+	Vue.component('sxy',{
+		template:'#sxy',
+		data:function(){
+			return {
+				num:0
+			}
+		},
+		methods:{
+			btn(){
+				this.num++
+			}
+		},
+		watch:{
+			num(a,b){
+				console.log(a,b)
+			}
+			
+		}
+	})
+	new Vue({
+		el:'#box',
+		data:{
+			arr:[1,2,3]
+		}
+	})
+</script>
+</html>
